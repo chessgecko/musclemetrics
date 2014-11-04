@@ -1,0 +1,177 @@
+<div class="header"> <div class="header-link-wrap navbar-fixed-top"> <div style="position: absolute; width: 100%"><div id="main-header-text">Muscle Metrics </div></div> <div id="main-top-nav-right" style="float: right; width: auto"><a style="margin-right: 20px" ng-click="logout()" id="mainlink">Logout</a> </div> </div> </div> <div class="prof"> <div class="container-fluid"> <div class="row"> <div class="col-sm-3 col-md-2 sidebar"> <ul class="nav nav-sidebar"> <li class="active" id="prof-overview"><a ng-click="setActive('prof-overview','Overview')">Overview</a></li> </ul> <ul class="nav nav-sidebar"> <li id="prof-workouts"><a ng-click="setActive('prof-workouts','Workouts')">Select a Routine</a></li> <li id="prof-workouts"><a ng-click="setActive('prof-workouts','Workouts')">Routine Creator</a></li> <li id="prof-workout-analytics"><a ng-click="setActive('prof-workout-analytics','Analytics')" id="prof-workout-analytics">Workout Analytics</a></li> <li id="prof-training"><a ng-click="setActive('prof-training','Training')">Training</a></li> </ul> <ul class="nav nav-sidebar"> <li id="prof-diet-plan"><a ng-click="setActive('prof-diet-plan','Diet Plan')">Diet Plan</a></li> <li id="prof-my-nutrition"><a ng-click="setActive('prof-my-nutrition','My Nutrition')">My Nutrition</a></li> </ul> </div> <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2"> <h1 class="page-header">{{currentName}}</h1> <div id="overview-wrapper" ng-show="activeTab('Overview')"> <div class="row graphrow"> <div class="col-lg-3 prof-info"> <h4>Visits per week</h4> <div> average last month: 2.7/week </div> <div> average last year: 14/month </div> </div> <div class="col-lg-3"> <div id="chart1" class="chartS"></div> </div> <div class="col-lg-4 col-lg-offset-1"> <div id="chart2" class="chartL"></div> </div> </div> <div class="row prof-seg graphrow"> <div class="col-lg-3 prof-info"> <h4>Visit Duration</h4> <div> average last month: 1.2 hours </div> <div> average last year: 1.5 hours </div> </div> <div class="col-lg-3"> <div id="chart3" class="chartS"></div> </div> <div class="col-lg-4 col-lg-offset-1"> <div id="chart4" class="chartL"></div> </div> </div> </div> <div id="workouts-wrapper" ng-show="activeTab('Workouts')"> <h5 style="float:right">create new routine +</h5> <div> </div> <div class="workouts-wrapper"> </div> </div> </div> </div> </div> </div> <!-- 
+<script language="javascript" type="text/javascript" src="../scripts/cosmetic/profile.js"></script>
+--> <script type="text/javascript">var monthDispVis = [['Week1', 3], ['Week2', 2], ['Week3', 2], 
+  ['week4', 4], ['week5', 3]];
+
+  var yearDispVis = [['Jan', 18], ['Feb', 16], ['March', 17], 
+  ['April', 22], ['May', 19],['June', 14], ['July', 11], ['August', 3], 
+  ['September', 25], ['October', 0], ['November', 0], ['December', 0]];
+
+  var monthDispHr = [['Week1', 1.0], ['Week2', .9], ['Week3', 2.0], 
+  ['week4', 2.1], ['week5', 1.6]];
+
+  var yearDispHr = [['Jan', 1.6], ['Feb', 1.3], ['March', 1.7], 
+  ['April', 1.7], ['May', 1.4],['June', 1.2], ['July', .8], ['August', 1.0], 
+  ['September', 1.1], ['October', 0], ['November', 0], ['December', 0]];
+
+
+
+  $(document).ready(function(){
+  //drawShape();
+  plot();
+});
+
+/*
+function drawShape(){
+  // get the canvas element using the DOM
+  var canvas = document.getElementById('workouts-canvas');
+
+  // Make sure we don't execute when canvas isn't supported
+  if (canvas.getContext){
+
+    // use getContext to use the canvas for drawing
+
+    var width = 1000;
+    var height = 400;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    var ctx = canvas.getContext('2d');
+
+    // ctx.rect(0, 0, width-10, height-100);
+    // ctx.fillStyle = '#7FCB9F';
+    // ctx.fill();
+    // ctx.lineWidth = 7;
+    // ctx.strokeStyle = '#7FCB9F';
+    //ctx.fill(); 
+
+    // ctx.font = '20px Times New Roman';
+     //ctx.strokeStyle="#FF0000";
+    // ctx.fillText("Starting Strength", 20, 20);
+
+    ctx.globalAlpha = 0.95;
+    ctx.rect(0, 0, 1600, 350);
+    ctx.fillStyle = "#7FCB9F";
+    ctx.fill();
+
+    ctx.font="16px Georgia";
+    ctx.fillStyle = "black";
+    ctx.fillText('Routine #1: Starting Strength',25,25);
+
+    // Filled triangle
+    // ctx.beginPath();
+    // ctx.moveTo(center-50,25);
+    // ctx.lineTo(center/3,120);
+    // ctx.closePath();
+    // ctx.stroke();
+
+    // ctx.beginPath();
+    // ctx.moveTo(center, 50);
+    // ctx.lineTo(3*center/3,120);
+    // ctx.closePath();
+    // ctx.stroke();
+
+    // ctx.beginPath();
+    // ctx.moveTo(center + 50,25);
+    // ctx.lineTo(5*center/3,120);
+    // ctx.closePath();
+    // ctx.stroke();
+    //ctx.fill();
+    
+    // Stroked triangle
+    /*
+    ctx.beginPath();
+    ctx.moveTo(125,125);
+    ctx.lineTo(125,45);
+    ctx.lineTo(45,125);
+    ctx.closePath();
+    ctx.stroke();
+    */
+
+// } else {
+//  alert('You need Safari or Firefox 1.5+ to see this demo.');
+// }
+// }
+
+function plot(){
+  var plot1 = $.jqplot('chart1', [monthDispVis], {
+    title: 'Gym visits Sept',
+    series:[{renderer:$.jqplot.BarRenderer}],
+    axesDefaults: {
+      tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+      tickOptions: {
+        angle: -30,
+        fontSize: '10pt',
+        fontFamily: 'Helvetica'
+      }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer
+      }
+    },
+    grid: {
+      drawGridlines:false
+    }
+
+  });
+  var plot2 = $.jqplot('chart2', [yearDispVis], {
+    title: 'Gym visits this 2014',
+    series:[{renderer:$.jqplot.BarRenderer}],
+    axesDefaults: {
+      tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+      tickOptions: {
+        angle: -30,
+        fontSize: '10pt'
+      }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer
+      }
+    },
+    grid: {
+      drawGridlines:false
+    }
+  });
+  var plot3 = $.jqplot('chart3', [monthDispHr], {
+    title: 'Visit length Sept',
+    series:[{renderer:$.jqplot.BarRenderer}],
+    axesDefaults: {
+      tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+      tickOptions: {
+        angle: -30,
+        fontSize: '10pt'
+      }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer
+      }
+    },
+    grid: {
+      drawGridlines:false
+    }
+  });
+  var plot4 = $.jqplot('chart4', [yearDispHr], {
+    title: 'Visit Length 2014',
+    series:[{renderer:$.jqplot.BarRenderer}],
+    axesDefaults: {
+      tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+      tickOptions: {
+        angle: -30,
+        fontSize: '10pt'
+      }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer
+      }
+    },
+    grid: {
+      drawGridlines:false
+    }
+  });
+  
+}</script>
