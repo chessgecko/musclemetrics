@@ -1,0 +1,51 @@
+<div class="header">
+	<div class="header-link-wrap navbar-fixed-top">
+
+		<div style='position: absolute; width: 100%;'><div id='main-header-text'>Muscle Metrics
+		</div></div>
+
+		<div id="main-top-nav-right" style="float: right;" ><a ng-click="redirectRegister()" id="mainlink" >Register</a><a ng-click="redirectLogin()" id="mainlink">Login</a>
+			<a ng-click="redirectBusreg()" id="mainlink" >Upgrade your gym today</a>
+		</div>
+	</div>
+</div>
+
+<div class="container login-form">
+	<form class="form-signin" role="form" ng-submit="login()">
+		<h2 class="form-signin-heading">Sign in your Personal or Enterprise account</h2>
+		<div class="col-lg-3"></div>
+		<div class="col-lg-6">
+
+			<input type="text" ng-model="user.username" class="form-control" placeholder="username" required autofocus>
+			<input type="password" ng-model="user.password" class="form-control" placeholder="Password" required>
+
+			<label class="checkbox">
+				<input type="checkbox" value="remember-me"> Remember me
+			</label>
+			<div class="button-wrapper">
+				<button class="btn btn-lg btn-primary btn-block auth-button" type="submit">Sign in</button>
+			</div>
+		</div>
+		
+	</form>
+</div> 
+
+<div class="reset-link">
+	<a>Password Reset</a>
+</div>
+
+<div class="container">
+	<div class="reset-link">
+		<p>Don't have an account? Sign up here!</p>
+		<div class="col-lg-3"></div>
+		<div class="col-lg-6">
+			<div class="button-wrapper">
+				<button class="btn btn-lg btn-primary btn-block auth-button" type="submit" ng-click="login()">Create your account here</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- /container -->
+
+
